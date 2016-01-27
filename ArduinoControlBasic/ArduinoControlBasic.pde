@@ -39,6 +39,30 @@ void draw(){
   for (int i=0; i<button.length; i++){
     button[i].render(button[i].checkMouse(), clicked[i]);
   }
+  
+  //delay(50);
+}
+
+void serialEvent(Serial myPort) {
+  String val = myPort.readString() ;
+  if (! val.equals(masterVal)) {
+    masterVal = val ; 
+    print("Value from Arduino: ");
+    println(val); 
+  }else{
+  }
+}
+
+void mouseClicked(){
+  
+  for (int i=0; i<button.length; i++){
+    //button[i].render(button[i].checkMouse(),clicked[i]);
+    if (button[i].checkMouse()){ 
+      clicked[i] = ! clicked[i];
+      button[i].render(true,clicked[i]);
+    }
+    
+  }
   String valStr = "";
   try{
     for (int i=0; i<button.length-1; i++){
@@ -60,28 +84,4 @@ void draw(){
     //print("Exception: ");
     //e.printStackTrace();
   }
-  delay(50);
-}
-
-void serialEvent(Serial myPort) {
-  String val = myPort.readString() ;
-  if (! val.equals(masterVal)) {
-    masterVal = val ; 
-    print("Value from Arduino: ");
-    println(val); 
-  }else{
-  }
-}
-
-
-void mouseClicked(){
-  
-  for (int i=0; i<button.length; i++){
-    //button[i].render(button[i].checkMouse(),clicked[i]);
-    if (button[i].checkMouse()){ 
-      clicked[i] = ! clicked[i];
-      button[i].render(true,clicked[i]);
-    }
-    
-  }  
 }
