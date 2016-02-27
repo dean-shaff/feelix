@@ -2,7 +2,20 @@
 //Button button;
 import processing.serial.*;
 Serial myPort ; 
-String masterVal = "0,0,0,0,0,0,0,0,0,\n";
+DisposeHandler dh ; 
+
+
+String masterVal = "0,0,0,0,0,0,0,0,0$\n";
+String offVal = "0,0,0,0,0,0,0,0,0$\n";
+
+int onTime = 1000 ;
+int offTime = 500 ;  
+
+boolean on_called = false;  
+boolean off_called = false; 
+
+
+long curTime ; 
 int widthGrid = 3;  
 int heightGrid = 3;
 Button[] button = new Button[widthGrid*heightGrid]; 
@@ -11,6 +24,7 @@ boolean[] clicked = new boolean[widthGrid*heightGrid];
 
 void setup(){
   size(600,600);
+  dh = new DisposeHandler(this) ; 
   //button[0] = new Button(10,10,150,150,"Button 1");
   //button[1] = new Button(200,200,150,150,"Button 2");
   for (int x=0; x< widthGrid ; x++){
@@ -30,28 +44,57 @@ void setup(){
     print("Exception: ");
     e.printStackTrace();
   }
-   
+  curTime = millis() ; 
   //button.render() ;
 }
 
 void draw(){
+  
+  //println(off_called, on_called) ;
   background(255);
   for (int i=0; i<button.length; i++){
     button[i].render(button[i].checkMouse(), clicked[i]);
   }
+  if (millis() - curTime < onTime){
+    if (! on_called){
+      myPort.write(masterVal) ; 
+      on_called = true ;
+    }
+  }
   
-  //delay(50);
+  if (millis() - curTime < (onTime + offTime) && millis() - curTime > onTime) {  
+    if (! off_called){
+      myPort.write(offVal);
+      off_called = true; 
+    }
+  }
+  else if (millis() - curTime > (onTime + offTime)) {
+    curTime = millis() ;
+    off_called = false; 
+    on_called = false ; 
+  }
 }
+
+
+void delayDean(int delay){
+  long timeCur = millis()  ;
+  while (millis() - timeCur < delay){   
+  }
+}
+
 
 void serialEvent(Serial myPort) {
   String val = myPort.readString() ;
-  if (! val.equals(masterVal)) {
-    masterVal = val ; 
-    print("Value from Arduino: ");
-    println(val); 
-  }else{
-  }
+  print("Value from Arduino: ");
+  println(val); 
+  //if (! val.equals(masterVal)) {
+  //  masterVal = val ; 
+  //  print("Value from Arduino: ");
+  //  println(val); 
+  //}else{
+  //}
 }
+
 
 void mouseClicked(){
   
@@ -63,23 +106,23 @@ void mouseClicked(){
     }
     
   }
-  String valStr = "";
+  masterVal = "";
   try{
     for (int i=0; i<button.length-1; i++){
       if (clicked[i]){
-        valStr += "1,";
+        masterVal += "1,";
       }else if (! clicked[i]){
-        valStr += "0,";
+        masterVal += "0,";
       }
     }
     if (clicked[8]){
-      valStr += "1";
+      masterVal += "1";
     }else if (! clicked[8]){
-      valStr += "0";
+      masterVal += "0";
     }
-    valStr += "$\n";
-    //print(valStr);
-    myPort.write(valStr);
+    masterVal += "$\n";
+    curTime = millis() ; 
+    
   }catch(Exception e){
     //print("Exception: ");
     //e.printStackTrace();
