@@ -8,14 +8,15 @@ DisposeHandler dh ;
 String masterVal = "0,0,0,0,0,0,0,0,0$\n";
 String offVal = "0,0,0,0,0,0,0,0,0$\n";
 
-int onTime = 1000 ;
-int offTime = 500 ;  
+int onTime = 500 ;
+int offTime = 1000 ;  
 
 boolean on_called = false;  
-boolean off_called = false; 
+ 
 
-
-long curTime ; 
+int state;
+long lastSend;
+long curTime; 
 int widthGrid = 3;  
 int heightGrid = 3;
 Button[] button = new Button[widthGrid*heightGrid]; 
@@ -44,7 +45,9 @@ void setup(){
     print("Exception: ");
     e.printStackTrace();
   }
+  lastSend = 0;
   curTime = millis() ; 
+  state = 0;
   //button.render() ;
 }
 
@@ -52,26 +55,33 @@ void draw(){
   
   //println(off_called, on_called) ;
   background(255);
+  
+  //Read Buttons
   for (int i=0; i<button.length; i++){
     button[i].render(button[i].checkMouse(), clicked[i]);
   }
-  if (millis() - curTime < onTime){
-    if (! on_called){
-      myPort.write(masterVal) ; 
-      on_called = true ;
-    }
-  }
   
-  if (millis() - curTime < (onTime + offTime) && millis() - curTime > onTime) {  
-    if (! off_called){
-      myPort.write(offVal);
-      off_called = true; 
+  switch(state){
+    
+    //Actuators are OFF
+    case 0:
+    if (millis() - lastSend > offTime){
+       // Turn ON
+       myPort.write(masterVal) ;
+       //Now ON
+       state = 1;
+       lastSend = millis();
+       println(masterVal);
     }
-  }
-  else if (millis() - curTime > (onTime + offTime)) {
-    curTime = millis() ;
-    off_called = false; 
-    on_called = false ; 
+      
+    case 1:
+    if (millis() - lastSend > onTime){
+      // turn OFF
+      myPort.write(offVal);
+      state = 0;
+      lastSend = millis();
+      print("OFF");
+    }
   }
 }
 
