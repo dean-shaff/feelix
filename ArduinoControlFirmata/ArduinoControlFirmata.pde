@@ -6,11 +6,11 @@ Arduino arduino;
 
 //control for arduino setup 
 //Button button;
-import processing.serial.*;
+
 
 int[] offVal = {0,0,0,0,0,0,0,0,0} ; 
 int[] masterVal =  {0,0,0,0,0,0,0,0,0} ;
-int[] ardyPin = {4,5,6,7,8,9,10,11,12};
+
 
 int onTime = 10 ;
 int offTime = 10 ;  

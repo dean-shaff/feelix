@@ -2,8 +2,6 @@
 //Button button;
 import processing.serial.*;
 Serial myPort ; 
-DisposeHandler dh ; 
-
 
 String masterVal = "0,0,0,0,0,0,0,0,0$\n";
 String offVal = "0,0,0,0,0,0,0,0,0$\n";
@@ -24,7 +22,7 @@ boolean[] clicked = new boolean[widthGrid*heightGrid];
 
 void setup(){
   size(600,600);
-  dh = new DisposeHandler(this) ; 
+
   //button[0] = new Button(10,10,150,150,"Button 1");
   //button[1] = new Button(200,200,150,150,"Button 2");
   for (int x=0; x< widthGrid ; x++){
