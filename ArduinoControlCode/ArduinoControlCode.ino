@@ -1,6 +1,7 @@
 int numPins = 9;
 //int pins[] = {8,7,5,3,2,0,9,10,11}; // correct sequence !
-int pins[] = {11,10,9,0,1,2,3,5,8};
+//int pins[] = {11,10,9,0,1,2,3,5,8};
+int pins[] = {13,10,9,0,1,2,3,5,8};
 char incomingBytes[] = {0,0,0,0,0,0,0,0,0} ; 
 char curState[] = {0,0,0,0,0,0,0,0,0};
 void setup() {
