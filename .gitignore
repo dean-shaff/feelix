@@ -10,7 +10,8 @@ BLEAndroid/
 BLEControllerSketchDeanMod/ 
 blepdroid/
 ArduinoControlCodeBLE/
-Android/
+Android/*
+Android/ 
 *.zip 
 ArduinoControlBasic/
 old_stuff/ 
