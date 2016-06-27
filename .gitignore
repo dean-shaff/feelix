@@ -1,2 +1,16 @@
 *.pdf
 rodImpl/
+ulnTest/
+ulnTest2/
+testPins/
+testBlendPins/
+test/ 
+ArduinoControlFirmata*/ 
+BLEAndroid/ 
+BLEControllerSketchDeanMod/ 
+blepdroid/
+ArduinoControlCodeBLE/
+Android/
+*.zip 
+ArduinoControlBasic/
+old_stuff/ 
