@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="feelixApi">
-    <output-path>$PROJECT_DIR$/out/artifacts/feelixApi</output-path>
-    <root id="archive" name="feelixApi.jar" />
-  </artifact>
-</component>

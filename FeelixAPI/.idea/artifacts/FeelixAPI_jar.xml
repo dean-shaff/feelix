@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FeelixAPI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FeelixAPI_jar</output-path>
+    <root id="archive" name="FeelixAPI.jar">
+      <element id="module-output" name="FeelixAPI" />
+      <element id="extracted-dir" path="$USER_HOME$/soft/jSSC-2.8.0-Release/jssc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/soft/processing-3.1.1/modes/java/libraries/serial/library/serial.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
